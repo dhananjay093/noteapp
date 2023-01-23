@@ -1,13 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:newapp/pages/loginview.dart';
+import 'package:newapp/pages/registerview.dart';
+import 'package:newapp/pages/verify_email_view.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  var ensureInitialized = WidgetsFlutterBinding.ensureInitialized();
   // await Firebase.initializeApp();
 
   runApp(
@@ -17,6 +19,10 @@ void main() async {
         primarySwatch: Colors.blue,
       ),
       home: Homepage(),
+      routes: {
+        '/login/': (context) => LoginView(),
+        '/register/': (context) => RegisterView(),
+      },
     ),
   );
 }
@@ -26,34 +32,29 @@ class Homepage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
+    return FutureBuilder(
+      future: Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
       ),
-      body: FutureBuilder(
-        future: Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,
-        ),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              print(FirebaseAuth.instance.currentUser);
-              final user = FirebaseAuth.instance.currentUser;
-             
-              if (user?.emailVerified ?? false) {
-                          print('verified');
-                        } else {
-                          print('not verified');
-                          print(user);
-                        }
-              return Text("Done");
-              
-            default:
-              return Text("loading..");
-              
-          }
-        },
-      ),
+      builder: (context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.done:
+            print(FirebaseAuth.instance.currentUser);
+            final user = FirebaseAuth.instance.currentUser;
+            if (user != null) {
+              if (user.emailVerified) {
+                print(const Text('email verified'));
+              } else {
+                return VerifyEmailView();
+              }
+            } else {
+              return LoginView();
+            }
+            return Text('done');
+          default:
+            return CircularProgressIndicator();
+        }
+      },
     );
   }
 }

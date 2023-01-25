@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:newapp/pages/constants/routes.dart';
 import 'package:newapp/pages/loginview.dart';
 import 'package:newapp/pages/registerview.dart';
 import 'package:newapp/pages/verify_email_view.dart';
@@ -21,9 +22,9 @@ void main() async {
       ),
       home: const Homepage(),
       routes: {
-        '/login/': (context) => const LoginView(),
-        '/register/': (context) => const RegisterView(),
-        '/notes/': (context) => const Notesview(),
+        loginroute: (context) => const LoginView(),
+        registerroute: (context) => const RegisterView(),
+        notesroute: (context) => const Notesview(),
       },
     ),
   );

@@ -19,7 +19,7 @@ class Notesview extends StatelessWidget {
             onSelected: (value) async {
               switch (value) {
                 case MenuAction.logout:
-                  final shouldlogout = await showdialog(context);
+                  final shouldlogout = await show_dialog(context);
                   if (shouldlogout) {
                     await FirebaseAuth.instance.signOut();
                     Navigator.of(context)
@@ -44,7 +44,7 @@ class Notesview extends StatelessWidget {
   }
 }
 
-Future<bool> showdialog(BuildContext context) {
+Future<bool> show_dialog(BuildContext context) {
   return showDialog(
       context: context,
       builder: (context) {

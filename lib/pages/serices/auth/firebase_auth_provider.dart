@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:newapp/firebase_options.dart';
 import 'package:newapp/pages/serices/auth/auth_provider.dart';
 import 'package:newapp/pages/serices/auth/auth_user.dart';
 import 'package:newapp/pages/serices/auth/authexceptions.dart';
@@ -76,7 +77,7 @@ class FirebaseAuthProvider implements AuthProvider {
   }
 
   @override
-  Future<void> SendEmailVerification() async  {
+  Future<void> SendEmailVerification() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       await user.sendEmailVerification();
@@ -93,5 +94,11 @@ class FirebaseAuthProvider implements AuthProvider {
     } else {
       return null;
     }
+  }
+
+  @override
+  Future<void> initialize() async {
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform);
   }
 }

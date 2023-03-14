@@ -1,6 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 //import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:newapp/pages/serices/auth/auth_service.dart';
+import 'package:newapp/pages/serices/auth/authexceptions.dart';
 import 'package:newapp/pages/utilities/showerrordialog.dart';
 
 import 'constants/routes.dart';
@@ -55,21 +56,17 @@ class _RegisterViewState extends State<RegisterView> {
               final email = _email.text;
               final password = _password.text;
               try {
-                FirebaseAuth.instance.createUserWithEmailAndPassword(
-                    email: email, password: password);
-                final user = FirebaseAuth.instance.currentUser;
-                await user?.sendEmailVerification();
+                await AuthService.firebase()
+                    .CreateUser(email: email, password: password);
+
+                await AuthService.firebase().SendEmailVerification();
                 Navigator.of(context).pushNamed('/verifyemail/');
-              } on FirebaseAuthException catch (e) {
-                if (e.code == 'email-already-in-use') {
-                  showerrordialog(context, 'email-already-in-use');
-                } else if (e.code == 'weak-password') {
-                  showerrordialog(context, 'weak password');
-                } else {
-                  showerrordialog(context, e.toString());
-                }
-              } catch (e) {
-                showerrordialog(context, e.toString());
+              } on EmailAlreadyInUseAuthException {
+                showerrordialog(context, 'email-already-in-use');
+              } on WeakPasswordFoundAuthException {
+                showerrordialog(context, 'weak password');
+              } on GenericAuthException {
+                showerrordialog(context, 'Error');
               }
             },
             child: const Text('register'),

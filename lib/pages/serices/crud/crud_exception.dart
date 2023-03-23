@@ -1,3 +1,5 @@
+
+
 class DatabaseAlreadyOpenException implements Exception {}
 
 class CoulNotUpdateNote implements Exception {}
@@ -13,3 +15,4 @@ class CouldNotDeleteUser implements Exception {}
 class UserAlreadyExists implements Exception {}
 
 class DatabaseIsNotOpenException implements Exception {}
+

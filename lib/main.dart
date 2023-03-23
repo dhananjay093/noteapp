@@ -5,8 +5,7 @@ import 'package:newapp/pages/serices/auth/auth_service.dart';
 import 'package:newapp/pages/verify_email_view.dart';
 import 'package:newapp/pages/notes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
+
 import 'dart:developer' as devtools show log;
 
 void main() async {

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:newapp/pages/enum/menu_actions.dart';
 import 'package:newapp/pages/serices/auth/auth_service.dart';
 import 'package:newapp/pages/serices/crud/note_service.dart';
-import 'constants/routes.dart';
+import '../constants/routes.dart';
 
 class Notesview extends StatefulWidget {
   const Notesview({Key? key}) : super(key: key);
@@ -33,6 +33,12 @@ class _NotesviewState extends State<Notesview> {
         appBar: AppBar(
           title: const Text('Notes'),
           actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(newnotesroute);
+              },
+              icon: const Icon(Icons.add),
+            ),
             PopupMenuButton(
               onSelected: (value) async {
                 switch (value) {
@@ -68,6 +74,7 @@ class _NotesviewState extends State<Notesview> {
                   builder: (context, snapshot) {
                     switch (snapshot.connectionState) {
                       case ConnectionState.waiting:
+                      case ConnectionState.active:
                         return const Text('waiting for all notes');
 
                       default:

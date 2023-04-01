@@ -22,9 +22,9 @@ void main() async {
       routes: {
         loginroute: (context) => const LoginView(),
         registerroute: (context) => const RegisterView(),
-        notesroute: (context) => const Notesview(),
+        notesroute: (context) => const NotesView(),
         verifyemailview: (context) => const VerifyEmailView(),
-        newnotesroute: (context) =>  NewNotesView(),
+        newnotesroute: (context) => const NewNoteView(),
       },
     ),
   );
@@ -45,7 +45,7 @@ class Homepage extends StatelessWidget {
             if (user != null) {
               if (user.isEmailVerified) {
                 devtools.log('email verified');
-                return const Notesview();
+                return const NotesView();
               } else {
                 return const VerifyEmailView();
               }

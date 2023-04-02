@@ -132,7 +132,7 @@
 import 'package:flutter/material.dart';
 import 'package:newapp/pages/constants/routes.dart';
 import 'package:newapp/pages/enum/menu_actions.dart';
-import 'package:newapp/pages/notes/notes_list_view.dart';
+import 'package:newapp/pages/notes/note_view.dart';
 import 'package:newapp/pages/serices/auth/auth_service.dart';
 import 'package:newapp/pages/serices/crud/note_service.dart';
 
@@ -169,7 +169,7 @@ class _NotesViewState extends State<NotesView> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.of(context).pushNamed(newnotesroute);
+              Navigator.of(context).pushNamed(createupdatenoteview);
             },
             icon: const Icon(Icons.add),
           ),
@@ -216,12 +216,19 @@ class _NotesViewState extends State<NotesView> {
                           onDeleteNote: (note) async {
                             await _notesService.deleteNote(id: note.id);
                           },
+                          onTap: (note) {
+                            Navigator.of(context).pushNamed(
+                              createupdatenoteview,
+                              arguments: note,
+                            ); 
+                          },
                         );
                       } else {
                         return const CircularProgressIndicator();
                       }
 
                     default:
+                    
                       return const CircularProgressIndicator();
                   }
                 },

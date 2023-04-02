@@ -1,6 +1,6 @@
 import 'package:newapp/pages/constants/routes.dart';
 import 'package:newapp/pages/loginview.dart';
-import 'package:newapp/pages/notes/new_notes.dart';
+import 'package:newapp/pages/notes/create_update_note_view.dart';
 import 'package:newapp/pages/registerview.dart';
 import 'package:newapp/pages/serices/auth/auth_service.dart';
 import 'package:newapp/pages/verify_email_view.dart';
@@ -24,7 +24,7 @@ void main() async {
         registerroute: (context) => const RegisterView(),
         notesroute: (context) => const NotesView(),
         verifyemailview: (context) => const VerifyEmailView(),
-        newnotesroute: (context) => const NewNoteView(),
+        createupdatenoteview: (context) => const CreateUpdateNoteView(),
       },
     ),
   );

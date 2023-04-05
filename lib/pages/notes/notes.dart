@@ -147,7 +147,7 @@ class NotesView extends StatefulWidget {
 
 class _NotesViewState extends State<NotesView> {
   late final NotesService _notesService;
-  String get userEmail => AuthService.firebase().currentuser!.email!;
+  String get userEmail => AuthService.firebase().currentuser!.email;
 
   @override
   void initState() {
@@ -211,7 +211,7 @@ class _NotesViewState extends State<NotesView> {
                     case ConnectionState.active:
                       if (snapshot.hasData) {
                         final allNotes = snapshot.data as List<DatabaseNote>;
-                        return NotesListiew(
+                        return NotesListview(
                           notes: allNotes,
                           onDeleteNote: (note) async {
                             await _notesService.deleteNote(id: note.id);
@@ -220,7 +220,7 @@ class _NotesViewState extends State<NotesView> {
                             Navigator.of(context).pushNamed(
                               createupdatenoteview,
                               arguments: note,
-                            ); 
+                            );
                           },
                         );
                       } else {
@@ -228,13 +228,13 @@ class _NotesViewState extends State<NotesView> {
                       }
 
                     default:
-                    
                       return const CircularProgressIndicator();
                   }
                 },
               );
             default:
-              return const CircularProgressIndicator();
+               return const CircularProgressIndicator();
+              
           }
         },
       ),

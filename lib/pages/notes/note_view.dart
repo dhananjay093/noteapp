@@ -5,11 +5,11 @@ import '../utilities/dailog/delete_dialog.dart';
 
 typedef NoteCallBack = void Function(DatabaseNote note);
 
-class NotesListiew extends StatelessWidget {
+class NotesListview extends StatelessWidget {
   final List<DatabaseNote> notes;
   final NoteCallBack onDeleteNote;
   final NoteCallBack onTap;
-  const NotesListiew({
+  const NotesListview({
     Key? key,
     required this.notes,
     required this.onDeleteNote,

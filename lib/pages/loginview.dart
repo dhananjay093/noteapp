@@ -5,6 +5,7 @@ import 'package:newapp/pages/serices/auth/auth_service.dart';
 import 'package:newapp/pages/serices/auth/authexceptions.dart';
 import 'package:newapp/pages/serices/bloc/auth_bloc.dart';
 import 'package:newapp/pages/serices/bloc/auth_event.dart';
+import 'package:newapp/pages/serices/bloc/auth_state.dart';
 import 'package:newapp/pages/utilities/dailog/error_dialog.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -52,23 +53,27 @@ class _LoginViewState extends State<LoginView> {
             autocorrect: false,
             decoration: const InputDecoration(hintText: 'Enter Password'),
           ),
-          TextButton(
-            onPressed: () async {
-              final email = _email.text;
-              final password = _password.text;
-              try {
-                context.read<AuthBloc>().add(
-                      AuthEventLogIn(email, password),
-                    );
-              } on UserNotFoundAuthException {
-                showerrordialog(context, 'user not found');
-              } on WrongPasswordAuthException {
-                showerrordialog(context, 'wrong password');
-              } on GenericAuthException {
-                showerrordialog(context, 'Error');
+          BlocListener<AuthBloc, AuthState>(
+            listener: (context, state) {
+              if (state is AuthStateLoggedOut) {
+                if (state.exception is UserNotFoundAuthException ||
+                    state.exception is WrongPasswordAuthException) {
+                  showerrordialog(context, 'User Not Found');
+                } else if (state.exception is GenericAuthException) {
+                  showerrordialog(context, 'Authentication Error');
+                }
               }
             },
-            child: const Text('login'),
+            child: TextButton(
+              onPressed: () async {
+                final email = _email.text;
+                final password = _password.text;
+                context.read<AuthBloc>().add(
+                        AuthEventLogIn(email, password),
+                      );
+              },
+              child: const Text('login'),
+            ),
           ),
           TextButton(
             onPressed: () {

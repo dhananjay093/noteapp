@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:newapp/pages/constants/routes.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newapp/pages/serices/auth/auth_service.dart';
+import 'package:newapp/pages/serices/bloc/auth_bloc.dart';
+import 'package:newapp/pages/serices/bloc/auth_event.dart';
 
 class VerifyEmailView extends StatefulWidget {
   const VerifyEmailView({Key? key}) : super(key: key);
@@ -24,14 +26,16 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
               'If verification email not sent. Click on the below button'),
           TextButton(
               onPressed: () async {
-                await AuthService.firebase().SendEmailVerification();
+                context.read<AuthBloc>().add(
+                      AuthEventSendEmailVerification(),
+                    );
               },
               child: const Text('send email verification')),
           TextButton(
               onPressed: () {
-                AuthService.firebase().LogOut();
-                Navigator.of(context)
-                    .pushNamedAndRemoveUntil(registerroute, (route) => false);
+                context.read<AuthBloc>().add(
+                      AuthEventLogOut(),
+                    );
               },
               child: Text('Login'))
         ],

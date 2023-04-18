@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:newapp/pages/utilities/dailog/generic_dailog.dart';
 
-Future<void> showerrordialog(
+Future<void> showErrorDialog(
   BuildContext context,
   String text,
 ) {

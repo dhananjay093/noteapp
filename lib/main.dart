@@ -28,10 +28,7 @@ void main() async {
         child: Homepage(),
       ),
       routes: {
-        loginroute: (context) => const LoginView(),
-        registerroute: (context) => const RegisterView(),
-        notesroute: (context) => const NotesView(),
-        verifyemailview: (context) => const VerifyEmailView(),
+       
         createupdatenoteview: (context) => const CreateUpdateNoteView(),
       },
     ),
@@ -52,7 +49,11 @@ class Homepage extends StatelessWidget {
           return const VerifyEmailView();
         } else if (state is AuthStateLoggedIn) {
           return const NotesView();
-        } else {
+        } 
+          else if (state is AuthStateRegistering) {
+          return const RegisterView();
+        }
+        else {
           return const Scaffold(
             body: CircularProgressIndicator(),
           );

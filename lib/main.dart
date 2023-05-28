@@ -14,6 +14,8 @@ import 'package:flutter/material.dart';
 
 import 'dart:developer' as devtools show log;
 
+import 'helpers/loading/loading_Screen.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -28,7 +30,6 @@ void main() async {
         child: Homepage(),
       ),
       routes: {
-       
         createupdatenoteview: (context) => const CreateUpdateNoteView(),
       },
     ),
@@ -41,7 +42,17 @@ class Homepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<AuthBloc>().add(const AuthEventInitialize());
-    return BlocBuilder<AuthBloc, AuthState>(
+    return BlocConsumer<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state.isLoading) {
+          LoadingScreen().show(
+            context: context,
+            text: state.loadingText ?? 'Please wait a moment',
+          );
+        } else {
+          LoadingScreen().hide();
+        }
+      },
       builder: (context, state) {
         if (state is AuthStateLoggedOut) {
           return const LoginView();
@@ -49,11 +60,9 @@ class Homepage extends StatelessWidget {
           return const VerifyEmailView();
         } else if (state is AuthStateLoggedIn) {
           return const NotesView();
-        } 
-          else if (state is AuthStateRegistering) {
+        } else if (state is AuthStateRegistering) {
           return const RegisterView();
-        }
-        else {
+        } else {
           return const Scaffold(
             body: CircularProgressIndicator(),
           );

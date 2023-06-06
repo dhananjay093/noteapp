@@ -74,4 +74,9 @@ class mockAuthProvider implements AuthProvider {
     await Future.delayed(Duration(seconds: 1));
     _isInitialized = true;
   }
+
+    @override
+  Future<void> sendPasswordReset({required String toEmail}) {
+    throw UnimplementedError();
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newapp/pages/constants/routes.dart';
+import 'package:newapp/pages/forgot_password_view.dart';
 import 'package:newapp/pages/loginview.dart';
 import 'package:newapp/pages/notes/create_update_note_view.dart';
 import 'package:newapp/pages/registerview.dart';
@@ -56,6 +57,8 @@ class Homepage extends StatelessWidget {
       builder: (context, state) {
         if (state is AuthStateLoggedOut) {
           return const LoginView();
+          } else if (state is AuthStateForgotPassword) {
+          return const ForgotPasswordView();
         } else if (state is AuthStateNeedsVerification) {
           return const VerifyEmailView();
         } else if (state is AuthStateLoggedIn) {

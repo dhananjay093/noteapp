@@ -17,7 +17,6 @@ class _LoginViewState extends State<LoginView> {
   late final TextEditingController _email;
   late final TextEditingController _password;
 
-
   @override
   void initState() {
     _email = TextEditingController();
@@ -37,7 +36,6 @@ class _LoginViewState extends State<LoginView> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) async {
         if (state is AuthStateLoggedOut) {
-          
           if (state.exception is UserNotFoundAuthException) {
             await showErrorDialog(
               context,
@@ -54,14 +52,15 @@ class _LoginViewState extends State<LoginView> {
         appBar: AppBar(
           title: const Text('Login'),
         ),
- 
- 
-body: Padding(
-          padding: const EdgeInsets.all(16.0),
+        body: Padding(
+          padding: const EdgeInsets.all(30),
           child: Column(
             children: [
               const Text(
-                  'Please log in to your account in order to interact with and create notes!'),
+                'Please log in to your account in order to interact with notes!',
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox.square(dimension: 20.0),
               TextField(
                 controller: _email,
                 enableSuggestions: false,
@@ -70,8 +69,9 @@ body: Padding(
                 decoration: const InputDecoration(
                   hintText: 'Enter your email here',
                 ),
-            ),
-             TextField(
+              ),
+              const SizedBox.square(dimension: 10.0),
+              TextField(
                 controller: _password,
                 obscureText: true,
                 enableSuggestions: false,
@@ -79,9 +79,9 @@ body: Padding(
                 decoration: const InputDecoration(
                   hintText: 'Enter your password here',
                 ),
-             ),
-            
-             TextButton(
+              ),
+              const SizedBox.square(dimension: 20.0),
+              TextButton(
                 onPressed: () async {
                   final email = _email.text;
                   final password = _password.text;
@@ -100,7 +100,7 @@ body: Padding(
                         const AuthEventForgotPassword(),
                       );
                 },
-                child: const Text('I forgot my password'),
+                child: const Text('Forgot password'),
               ),
               TextButton(
                 onPressed: () {
@@ -108,7 +108,7 @@ body: Padding(
                         const AuthEventShouldRegister(),
                       );
                 },
-                child: const Text('Not registered yet? Register here!'),
+                child: const Text('Not registered yet?  Register here!'),
               )
             ],
           ),

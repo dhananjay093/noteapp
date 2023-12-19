@@ -18,27 +18,39 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
       appBar: AppBar(
         title: const Text('Verify Email'),
       ),
-      body: Column(
-        children: [
-          const Text(
-              'An email verification link has been sent to your email.Click on link to verify'),
-          const Text(
-              'If verification email not sent. Click on the below button'),
-          TextButton(
-              onPressed: () async {
-                context.read<AuthBloc>().add(
-                      AuthEventSendEmailVerification(),
-                    );
-              },
-              child: const Text('send email verification')),
-          TextButton(
-              onPressed: () {
-                context.read<AuthBloc>().add(
-                      AuthEventLogOut(),
-                    );
-              },
-              child: Text('Login'))
-        ],
+      body: Padding(
+        padding: const EdgeInsets.all(30),
+        child: Column(
+          children: [
+            const Text(
+              'An email verification link has been sent to your email.Click on link to verify and try to login',
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox.square(dimension: 20.0),
+            const Text(
+              'If verification email not sent. Click on the "Send Verification Email" button ',
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox.square(dimension: 40.0),
+            TextButton(
+                onPressed: () {
+                  context.read<AuthBloc>().add(
+                        const AuthEventLogOut(),
+                      );
+                },
+                child: const Text('Login')),
+            TextButton(
+                onPressed: () async {
+                  context.read<AuthBloc>().add(
+                        const AuthEventSendEmailVerification(),
+                      );
+                  context.read<AuthBloc>().add(
+                        const AuthEventLogOut(),
+                      );
+                },
+                child: const Text('Send Verification Email')),
+          ],
+        ),
       ),
     );
   }

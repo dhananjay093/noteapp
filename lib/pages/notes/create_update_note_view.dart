@@ -105,6 +105,8 @@
 //   }
 // }
 
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:newapp/pages/serices/auth/auth_service.dart';
 import 'package:newapp/pages/utilities/dailog/cannot_share_empty_note_dialog.dart';
@@ -221,12 +223,19 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
               _setupTextControllerListener();
-              return TextField(
-                controller: _textController,
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
-                decoration: const InputDecoration(
-                  hintText: 'Start typing your note...',
+              return Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: TextField(
+                  controller: _textController,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                
+                  decoration: InputDecoration(
+                      hintText: 'Start typing your note...',
+                      contentPadding:
+                          EdgeInsets.only(bottom: 200.0, top: 50.0)),
+                  selectionHeightStyle: BoxHeightStyle.includeLineSpacingMiddle,
+                  
                 ),
               );
             default:

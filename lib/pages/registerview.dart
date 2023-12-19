@@ -54,11 +54,12 @@ class _RegisterViewState extends State<RegisterView> {
           title: const Text('Register'),
         ),
         body: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(30.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text('Enter your email and password to see your notes!'),
+              const SizedBox.square(dimension: 30.0),
               TextField(
                 controller: _email,
                 enableSuggestions: false,
@@ -68,15 +69,17 @@ class _RegisterViewState extends State<RegisterView> {
                 decoration: const InputDecoration(
                   hintText: 'Enter your email here',
                 ),
-            ),
-            TextField(
-              controller: _password,
-              obscureText: true,
-              enableSuggestions: false,
-              autocorrect: false,
-              decoration: const InputDecoration(hintText: 'enter password'),
-            ),
-            Center(
+              ),
+              const SizedBox.square(dimension: 10.0),
+              TextField(
+                controller: _password,
+                obscureText: true,
+                enableSuggestions: false,
+                autocorrect: false,
+                decoration: const InputDecoration(hintText: 'Enter password'),
+              ),
+              const SizedBox.square(dimension: 20.0),
+              Center(
                 child: Column(
                   children: [
                     TextButton(
@@ -89,6 +92,9 @@ class _RegisterViewState extends State<RegisterView> {
                                 password,
                               ),
                             );
+                            context.read<AuthBloc>().add(
+                        const AuthEventSendEmailVerification(),
+                      );
                       },
                       child: const Text('Register'),
                     ),
